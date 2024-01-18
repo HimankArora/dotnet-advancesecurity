@@ -38,7 +38,7 @@ namespace newTestApi.Controllers
                     Physics = mark.Physics,
                     Chemistry = mark.Chemistry,
                     Maths = mark.Maths,
-                    Pass=mark.Pass,
+                    Pass=false,
                 });
             }
             return Ok(marksDto);
