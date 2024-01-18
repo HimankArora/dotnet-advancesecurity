@@ -37,7 +37,7 @@ namespace newTestApi.Controllers
                     StudentRegNo = mark.StudentRegNo,
                     Physics = mark.Physics,
                     Chemistry = mark.Chemistry,
-                    Maths = 20,
+                    Maths = "58",
                     Pass=false,
                 });
             }
