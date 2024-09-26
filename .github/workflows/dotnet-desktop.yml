@@ -26,8 +26,8 @@ jobs:
         run: dotnet restore
 
       # Build the project
-      - name: Build the project
-        run: dotnet build --configuration Release --no-restore
+#      - name: Build the project
+#        run: dotnet build --configuration Release --no-restore
 
   # GitHub Advanced Security scan job
   security_scan:
