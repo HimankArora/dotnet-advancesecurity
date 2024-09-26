@@ -108,7 +108,7 @@ namespace newTestApi.Controllers
                 return NotFound();
             }
             }
-            }
+        name=Utkarsh;
             
 
             //map dto to domain model
