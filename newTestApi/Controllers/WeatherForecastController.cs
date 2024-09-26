@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace newTestApi.Controllers
 {
@@ -18,15 +19,27 @@ namespace newTestApi.Controllers
             _logger = logger;
         }
 
+        [HttpPost("upload")]
+        public IActionResult UploadFile(IFormFile file)
+        {
+            // Vulnerability: No file type validation
+            var uploads = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+
+            if (file.Length > 0)
+            {
+                var filePath = Path.Combine(uploads, file.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                return Ok(new { filePath });
+            }
+            return BadRequest("No file uploaded.");
+        }
+
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            // Vulnerability: Hardcoded API Key
-            string apiKey = "12345-abcde-67890-fghij"; // Sensitive information leak
-
-            // Logging the API key (This is just for demonstration and should never be done in production!)
-            _logger.LogWarning($"Using API Key: {apiKey}");
-
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
