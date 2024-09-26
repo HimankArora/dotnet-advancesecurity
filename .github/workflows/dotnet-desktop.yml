@@ -58,11 +58,12 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: "csharp"
+          languages: csharp
 
       # Build the project for CodeQL analysis
       - name: Build the project for CodeQL
         run: dotnet build --configuration Release --no-restore
 
+      # Perform CodeQL analysis
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v2
