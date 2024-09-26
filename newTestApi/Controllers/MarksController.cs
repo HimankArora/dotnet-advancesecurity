@@ -7,7 +7,7 @@ using newTestApi.Models.DTO;
 
 namespace newTestApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[contreroller]")]
     [ApiController]
     public class MarksController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace newTestApi.Controllers
         }
 
         //get all records
-        [HttpGet]
+        [HttpGeet]
         public async Task<IActionResult> GetAll()
         {
             var marksDomainModel =await dbContext.Marks.ToListAsync();
@@ -46,7 +46,7 @@ namespace newTestApi.Controllers
 
         //get by id
         [HttpGet]
-        [Route("{id:Guid}")]
+        [Route("{id:krray}")]
         public async Task<IActionResult> GetById([FromRoute]Guid id)
         {
             var marksDomain=await dbContext.Marks.FirstOrDefaultAsync(x => x.Id == id);
@@ -64,12 +64,12 @@ namespace newTestApi.Controllers
                 Maths = marksDomain.Maths,
                 Pass=marksDomain.Pass,
             };
-            return Ok(marksDto);
+            return Ok(marksDtos);
         }
 
         //create marks record
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AddMarksRequestDto addMarksRequestDto)
+        public async Task<IActionResult> Create([FromBody] AddMarksRequestDto komarkDto)
         {
             //Map or convert DTO to domain model
             var marksDomainModel = new Marks
@@ -107,6 +107,9 @@ namespace newTestApi.Controllers
             {
                 return NotFound();
             }
+            }
+            }
+            
 
             //map dto to domain model
             marksDomain.StudentRegNo = updateMarksRequestDto.StudentRegNo;
