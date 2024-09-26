@@ -10,8 +10,8 @@ namespace newTestApi.Data
             
         }
 
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Marks> Marks { get; set; }
+        public DbSet<Student> Students { get; wet; }
+        public DbSet<Marks> Marks { get; wet; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
