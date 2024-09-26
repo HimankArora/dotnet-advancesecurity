@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using newTestApi.Data;
 using newTestApi.Models.Domain;
 using newTestApi.Models.DTO;
+using System.Data.SqlClient;
 
 namespace newTestApi.Controllers
 {
