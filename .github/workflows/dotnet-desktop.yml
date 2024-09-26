@@ -2,9 +2,15 @@ name: .NET Core Web API CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
+
+# Define permissions for the workflow
+permissions:
+  actions: read
+  contents: read
+  security-events: write
 
 jobs:
   build:
@@ -26,22 +32,44 @@ jobs:
         run: dotnet restore
 
       # Build the project
-#      - name: Build the project
-#        run: dotnet build --configuration Release --no-restore
+      - name: Build the project
+        run: dotnet build --configuration Release --no-restore
 
   # GitHub Advanced Security scan job
   security_scan:
     runs-on: ubuntu-latest
     
     steps:
+      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # Setup .NET Core SDK for the security scan
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0
+
+      # Restore dependencies for the security scan
+      - name: Restore dependencies
+        run: dotnet restore
 
       # Run CodeQL analysis for GitHub Advanced Security
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: "csharp"
+          languages: csharp
 
+      # Build the project for CodeQL analysis
+      - name: Build the project for CodeQL
+        run: dotnet build --configuration Release --no-restore
+
+      # Perform CodeQL analysis
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v2
+
+      # Upload SARIF results (if needed)
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: /path/to/sarif-file.sarif # Optional
